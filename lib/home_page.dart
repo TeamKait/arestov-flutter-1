@@ -60,10 +60,12 @@ class _HomePageState extends State<HomePage>{
             textStyle: TextStyle(fontSize: 18),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
-            )
+            ),
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20)
           )
         )
       ),
+      home: LoginPage(onLocalChange: _changeLanguage),
     );
   }
 }
