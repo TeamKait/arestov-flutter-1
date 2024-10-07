@@ -1,0 +1,14 @@
+{
+    "title": "InfoPho",
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "current_time": "Current time",
+    "login_success": "Login Successful",
+    "login_failure": "Error: invalid username or password",
+    "register_success": "Registration Successful",
+    "register_failure": "Error: Username already exists",
+    "register_button": "Register",
+    "change_language": "Change language"
+}

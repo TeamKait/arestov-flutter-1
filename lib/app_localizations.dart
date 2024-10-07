@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
-class AppLocalozations {
+class AppLocalizations {
   final Locale locale;
   late Map<String, String> _localizedStrings;
 
-  AppLocalozations(this.locale);
+  AppLocalizations(this.locale);
 
-  static AppLocalozations? of(BuildContext context) {
-    return Localizations.of<AppLocalozations>(context, AppLocalozations);
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   Future<bool> load() async {
@@ -22,5 +22,29 @@ class AppLocalozations {
     });
 
     return true;
+  }
+
+  String translate(String key) {
+    return _localizedStrings[key] ?? key;
+  }
+}
+
+class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+  const AppLocalizationsDelegate();
+  @override
+  bool isSupported(Locale locale) {
+    return ["en", "ru"].contains(locale.languageCode);
+  }
+
+  @override
+  Future<AppLocalizations> load(Locale locale) async {
+    AppLocalizations localizations = AppLocalizations(locale);
+    await localizations.load();
+    return localizations;
+  }
+
+  @override
+  bool shouldReload(covariant LocalizationsDelegate<AppLocalizations> old) {
+    return false;
   }
 }

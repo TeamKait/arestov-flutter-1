@@ -1,0 +1,14 @@
+    {
+    "title": "ИнфоТел",
+    "login": "Логин",
+    "register": "Регистрация",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "current_time": "Текущее время",
+    "login_success": "Логин успешен",
+    "login_failure": "Ошибка: неверное имя пользователя или пароль",
+    "register_success": "Регистрация успешна",
+    "register_failure": "Ошибка: имя пользователя уже занято",
+    "register_button": "Зарегистрироваться",
+    "change_language": "Сменить язык"
+}
