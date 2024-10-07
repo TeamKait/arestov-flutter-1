@@ -8,16 +8,13 @@ class AppLocalozations {
 
   AppLocalozations(this.locale);
 
-  static AppLocalozations? of(BuildContext context){
+  static AppLocalozations? of(BuildContext context) {
     return Localizations.of<AppLocalozations>(context, AppLocalozations);
   }
 
-// ru.json
-// "hello_msg": "Привет",
-// en.json
-// "hello_msg": "Hello",
   Future<bool> load() async {
-    String jsonString = await rootBundle.loadString('assets/lang/${locale.languageCode}.json'); 
+    String jsonString =
+        await rootBundle.loadString('assets/lang/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'login_page.dart';
-import 'app_localozations.dart';
+import 'app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   @override
