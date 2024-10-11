@@ -11,7 +11,7 @@ import flutter_media_info
 import network_info_plus
 import open_file_mac
 import path_provider_foundation
-import sqflite
+import sqflite_darwin
 import url_launcher_macos
 import webview_flutter_wkwebview
 
