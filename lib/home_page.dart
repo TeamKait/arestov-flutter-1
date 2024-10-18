@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage>{
           )
         )
       ),
-      home: LoginPage(onLocalChange: _changeLanguage),
+      home: LoginPage(onLocaleChange: _changeLanguage),
     );
   }
 }
