@@ -25,5 +25,50 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _appWithSizeAndIcon = [];
   String _deviceInfo = '';
-  String sortCriterion = 'name';
+  String _sortCriterion = 'name';
+
+  @override
+  void initState() {
+    _loadInstalledAppsWithSizeAndIcon();
+    _getDeviceInfo();
+  }
+
+  Future<void> _loadInstalledAppsWithSizeAndIcon() async {
+    List<Application> apps = await DeviceApps.getInstalledApplications(
+      includeSystemApps: true,
+      includeAppIcons: true,
+    );
+    List<Map<String, dynamic>> appsWithSizeAndIcon = [];
+    for (var app in apps) {
+      File apkFile = File(app.apkFilePath);
+      double sizeInMb =
+          apkFile.existsSync() ? apkFile.lengthSync() / (1024 * 1024) : 0.0;
+      appsWithSizeAndIcon.add({
+        'app': app,
+        'size': sizeInMb > 0 ? '${sizeInMb.toStringAsFixed(2)} MB' : 'N/A',
+        'sizeValue': sizeInMb,
+        'icon': app is ApplicationWithIcon ? app.icon : null,
+      });
+    }
+    _sortApps(appsWithSizeAndIcon);
+    setState(() {
+      _appWithSizeAndIcon = appsWithSizeAndIcon;
+    });
+  }
+
+  void _sortApps(List<Map<String, dynamic>> apps) {
+    if (_sortCriterion == 'name') {
+      apps.sort((a, b) => a['app'].appName.compareTo(b['app'].appName));
+    } else if (_sortCriterion == 'size') {
+      apps.sort((a, b) =>
+          (a['sizeValue'] as double).compareTo(b['sizeValue'] as double));
+    }
+  }
+
+  void _onSortSelected(String criterion) {
+    setState(() {
+      _sortCriterion = criterion;
+      _sortApps(_appWithSizeAndIcon);
+    });
+  }
 }
