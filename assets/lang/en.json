@@ -10,5 +10,6 @@
     "register_success": "Registration Successful",
     "register_failure": "Error: Username already exists",
     "register_button": "Register",
-    "change_language": "Change language"
+    "change_language": "Change language",
+    "error_empty_login_password": "Error: login or password is empty"
 }

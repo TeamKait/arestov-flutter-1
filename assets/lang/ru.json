@@ -10,5 +10,6 @@
     "register_success": "Регистрация успешна",
     "register_failure": "Ошибка: имя пользователя уже занято",
     "register_button": "Зарегистрироваться",
-    "change_language": "Сменить язык"
+    "change_language": "Сменить язык",
+    "error_empty_login_password": "Ошибка: введите логин и пароль"
 }
