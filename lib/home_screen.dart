@@ -181,6 +181,85 @@ class _HomeScreenState extends State<HomeScreen> {
                           textStyle: TextStyle(fontSize: 14),
                         ),
                         child: Text("Аккумулятор"))),
+                SizedBox(width: 8),
+                Expanded(child: TextButton(style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(fontSize: 14 )
+                ),onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SystemInfoScreen()))
+                }, child: Text("Система",)))
+              ],
+            ),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(child: TextButton(onPressed: () {
+                  Navigator.push(
+                    context, 
+                  MaterialPageRoute(builder: (context) => TestingScreen()));
+                },
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(fontSize: 14),
+                ),
+                child: Text("Тестирование"),
+                )),
+                Expanded(child: TextButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context, 
+                  MaterialPageRoute(builder: (context) => AboutScreen()));
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    backgroundColor: Colors.teal[300],
+                    foregroundColor: Colors.white,
+                    textStyle: TextStyle(fontSize: 14),
+                  ),
+                  child: Text("О приложении"),
+                  )
+                ),
+                Expanded(child: TextButton(onPressed: () {
+                  Navigator.push(
+                    context, 
+                  MaterialPageRoute(builder: (context) => DeviceFeaturesScreen()));
+                },
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: TextStyle(fontSize: 14),
+                ),
+                child: Text("Устройства"),
+                )),
+              ],
+            ),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: 
+                  TextButton(
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SensorsScreen()));
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.teal[300],
+                      foregroundColor: Colors.white,
+                      textStyle: TextStyle(fontSize: 14),
+                    ),
+                    child: Text("Датчики")
+                  )
+                ),
+                SizedBox(width: 8,),
+                Expanded(child: child)
               ],
             )
           ],
