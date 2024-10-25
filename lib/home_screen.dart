@@ -72,5 +72,120 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Sort by"),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListTile(
+                                title: Text("Name"),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  _onSortSelected('name');
+                                },
+                              ),
+                              ListTile(
+                                title: Text("Size"),
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  _onSortSelected('size');
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                },
+                icon: Icon(Icons.sort)),
+            Expanded(
+              child: Center(
+                  child: StreamBuilder(
+                stream: Stream.periodic(Duration(seconds: 1)),
+                builder: (context, snapshot) {
+                  String formattedDateTime =
+                      DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now());
+                  return Text(formattedDateTime,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
+                },
+              )),
+            )
+          ],
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginPage(onLocaleChange: (locale) {})));
+              },
+              icon: Icon(Icons.exit_to_app))
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(_deviceInfo,
+                style: TextStyle(fontSize: 16, color: Colors.white)),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProcessorInfoScreen()));
+                    },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: Colors.teal,
+                      foregroundColor: Colors.white,
+                      textStyle: TextStyle(fontSize: 14),
+                    ),
+                    child: Text("Процессор"),
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BatteryInfoScreen()));
+                        },
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          backgroundColor: Colors.teal[300],
+                          foregroundColor: Colors.white,
+                          textStyle: TextStyle(fontSize: 14),
+                        ),
+                        child: Text("Аккумулятор"))),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
