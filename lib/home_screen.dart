@@ -71,4 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _sortApps(_appWithSizeAndIcon);
     });
   }
+
+  
 }
