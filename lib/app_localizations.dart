@@ -1,9 +1,11 @@
+// Импортирование библиотек
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
+// Класс виджета
 class AppLocalizations {
-  
+  // Локализация
   final Locale locale;
   late Map<String, String> _localizedStrings;
 
@@ -13,6 +15,7 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  // Загрузить перевод
   Future<bool> load() async {
     String jsonString =
         await rootBundle.loadString('assets/lang/${locale.languageCode}.json');
@@ -25,11 +28,13 @@ class AppLocalizations {
     return true;
   }
 
+  // Перевести
   String translate(String key) {
     return _localizedStrings[key] ?? key;
   }
 }
 
+// Делегат загрузки перевода
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const AppLocalizationsDelegate();
   @override

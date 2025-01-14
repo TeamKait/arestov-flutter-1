@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+// Импортирование библиотек
 import 'package:flutter/material.dart';
-import 'database_helper.dart';
 import 'package:win32/win32.dart';
 import 'app_localizations.dart';
 
+// Импортирование сцен
+import 'database_helper.dart';
+
+// Класс виджета
 class RegisterPage extends StatefulWidget {
   final Function(Locale) onLocaleChange;
   const RegisterPage({super.key, required this.onLocaleChange});
@@ -12,6 +16,7 @@ class RegisterPage extends StatefulWidget {
   State<StatefulWidget> createState() => _RegisterPageState();
 }
 
+// Класс статуса страницы
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

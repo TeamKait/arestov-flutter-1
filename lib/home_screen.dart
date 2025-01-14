@@ -1,3 +1,4 @@
+// Импортирование библиотек
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -5,10 +6,10 @@ import 'package:device_apps/device_apps.dart';
 import 'dart:io';
 import 'dart:typed_data';
 
+// Импортирование сцен
 import 'processor_info_screen.dart';
 import 'system_info_screen.dart';
 import 'battery_info_screen.dart';
-
 import 'login_page.dart';
 import 'testing_screen.dart';
 import 'about_screen.dart';
@@ -17,6 +18,7 @@ import 'sensor_screen.dart';
 import 'reports_screen.dart';
 import 'register_screen.dart';
 
+// Класс сцены
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -35,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _getDeviceInfo();
   }
 
+  // Метод, загружающий приложения и информацию о них
   Future<void> _loadInstalledAppsWithSizeAndIcon() async {
     List<Application> apps = await DeviceApps.getInstalledApplications(
       includeSystemApps: true,

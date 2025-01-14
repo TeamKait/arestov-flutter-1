@@ -1,11 +1,15 @@
+// Импортирование библиотек
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
+
+// Импортирование сцен
 import 'database_helper.dart';
 import 'home_screen.dart';
 import 'register_page.dart';
 
+// Класс виджета
 class LoginPage extends StatefulWidget {
   final Function(Locale) onLocaleChange;
   const LoginPage({super.key, required this.onLocaleChange});
@@ -13,6 +17,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+// Класс статуса страницы
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
