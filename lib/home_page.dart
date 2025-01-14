@@ -4,12 +4,14 @@ import 'login_page.dart';
 import 'app_localizations.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>{
-  Locale _locale = Locale("ru", "RU");
+  Locale _locale = const Locale("ru", "RU");
   final MaterialColor _MAIN_COLOR = Colors.teal;
   void _changeLanguage(Locale locale){
     setState(() {
@@ -21,12 +23,12 @@ class _HomePageState extends State<HomePage>{
     return MaterialApp(
       title: "ИнфоТел",
       locale: _locale,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         AppLocalizationsDelegate(),
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale("en", "US"),
         Locale("ru", "RU"),
       ],
@@ -36,8 +38,8 @@ class _HomePageState extends State<HomePage>{
         scaffoldBackgroundColor: Colors.black87,
         textTheme: TextTheme(
           headlineLarge: TextStyle(color: _MAIN_COLOR),
-          bodyLarge: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.grey),
+          bodyLarge: const TextStyle(color: Colors.white),
+          bodyMedium: const TextStyle(color: Colors.grey),
         ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
@@ -57,11 +59,11 @@ class _HomePageState extends State<HomePage>{
             backgroundColor: _MAIN_COLOR[300],
             foregroundColor: Colors.black,
             elevation: 8,
-            textStyle: TextStyle(fontSize: 18),
+            textStyle: const TextStyle(fontSize: 18),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
             ),
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20)
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20)
           )
         )
       ),

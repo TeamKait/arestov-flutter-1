@@ -8,7 +8,7 @@ import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   final Function(Locale) onLocaleChange;
-  LoginPage({required this.onLocaleChange});
+  const LoginPage({super.key, required this.onLocaleChange});
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _startClock() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _currentTime = DateFormat('dd MMMM yyy HH:mm:ss',
                 Localizations.localeOf(context).toString())
@@ -44,43 +44,43 @@ class _LoginPageState extends State<LoginPage> {
         title: Text(localizations!.translate('title')),
         actions: [
           IconButton(
-            icon: Icon(Icons.language),
+            icon: const Icon(Icons.language),
             onPressed: () {
               widget.onLocaleChange(
                   Localizations.localeOf(context).languageCode == 'en'
-                      ? Locale("ru", "RU")
-                      : Locale("en", "EN"));
+                      ? const Locale("ru", "RU")
+                      : const Locale("en", "EN"));
             },
           )
         ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlutterLogo(
+              const FlutterLogo(
                 size: 100,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
                 _currentTime,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: localizations.translate('username'),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: passwordController,
                 decoration: InputDecoration(
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 obscureText: true,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(localizations.translate("login")),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                       child: ElevatedButton(
                     onPressed: () {

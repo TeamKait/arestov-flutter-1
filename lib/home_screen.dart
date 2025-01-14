@@ -18,13 +18,15 @@ import 'reports_screen.dart';
 import 'register_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _appWithSizeAndIcon = [];
-  String _deviceInfo = '';
+  final String _deviceInfo = '';
   String _sortCriterion = 'name';
 
   @override
@@ -84,19 +86,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Sort by"),
+                          title: const Text("Sort by"),
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               ListTile(
-                                title: Text("Name"),
+                                title: const Text("Name"),
                                 onTap: () {
                                   Navigator.of(context).pop();
                                   _onSortSelected('name');
                                 },
                               ),
                               ListTile(
-                                title: Text("Size"),
+                                title: const Text("Size"),
                                 onTap: () {
                                   Navigator.of(context).pop();
                                   _onSortSelected('size');
@@ -107,17 +109,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       });
                 },
-                icon: Icon(Icons.sort)),
+                icon: const Icon(Icons.sort)),
             Expanded(
               child: Center(
                   child: StreamBuilder(
-                stream: Stream.periodic(Duration(seconds: 1)),
+                stream: Stream.periodic(const Duration(seconds: 1)),
                 builder: (context, snapshot) {
                   String formattedDateTime =
                       DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now());
                   return Text(formattedDateTime,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
                 },
               )),
             )
@@ -132,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) =>
                             LoginPage(onLocaleChange: (locale) {})));
               },
-              icon: Icon(Icons.exit_to_app))
+              icon: const Icon(Icons.exit_to_app))
         ],
       ),
       body: Padding(
@@ -141,8 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(_deviceInfo,
-                style: TextStyle(fontSize: 16, color: Colors.white)),
-            SizedBox(height: 20),
+                style: const TextStyle(fontSize: 16, color: Colors.white)),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -155,15 +157,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) => ProcessorInfoScreen()));
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       backgroundColor: Colors.teal,
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 14),
+                      textStyle: const TextStyle(fontSize: 14),
                     ),
-                    child: Text("Процессор"),
+                    child: const Text("Процессор"),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Expanded(
@@ -175,24 +177,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                   builder: (context) => BatteryInfoScreen()));
                         },
                         style: TextButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
                           backgroundColor: Colors.teal[300],
                           foregroundColor: Colors.white,
-                          textStyle: TextStyle(fontSize: 14),
+                          textStyle: const TextStyle(fontSize: 14),
                         ),
-                        child: Text("Аккумулятор"))),
-                SizedBox(width: 8),
+                        child: const Text("Аккумулятор"))),
+                const SizedBox(width: 8),
                 Expanded(child: TextButton(style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   backgroundColor: Colors.teal[300],
                   foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 14 )
+                  textStyle: const TextStyle(fontSize: 14 )
                 ),onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => SystemInfoScreen()))
-                }, child: Text("Система",)))
+                }, child: const Text("Система",)))
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -202,12 +204,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => TestingScreen()));
                 },
                 style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   backgroundColor: Colors.teal[300],
                   foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 14),
+                  textStyle: const TextStyle(fontSize: 14),
                 ),
-                child: Text("Тестирование"),
+                child: const Text("Тестирование"),
                 )),
                 Expanded(child: TextButton(
                   onPressed: () {
@@ -216,12 +218,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => AboutScreen()));
                   },
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     backgroundColor: Colors.teal[300],
                     foregroundColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 14),
+                    textStyle: const TextStyle(fontSize: 14),
                   ),
-                  child: Text("О приложении"),
+                  child: const Text("О приложении"),
                   )
                 ),
                 Expanded(child: TextButton(onPressed: () {
@@ -230,16 +232,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => DeviceFeaturesScreen()));
                 },
                 style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   backgroundColor: Colors.teal[300],
                   foregroundColor: Colors.white,
-                  textStyle: TextStyle(fontSize: 14),
+                  textStyle: const TextStyle(fontSize: 14),
                 ),
-                child: Text("Устройства"),
+                child: const Text("Устройства"),
                 )),
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -250,15 +252,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SensorsScreen()));
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       backgroundColor: Colors.teal[300],
                       foregroundColor: Colors.white,
-                      textStyle: TextStyle(fontSize: 14),
+                      textStyle: const TextStyle(fontSize: 14),
                     ),
-                    child: Text("Датчики")
+                    child: const Text("Датчики")
                   )
                 ),
-                SizedBox(width: 8,),
+                const SizedBox(width: 8,),
                 Expanded(child: child)
               ],
             )

@@ -7,7 +7,7 @@ import 'app_localizations.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function(Locale) onLocaleChange;
-  RegisterPage({required this.onLocaleChange});
+  const RegisterPage({super.key, required this.onLocaleChange});
   @override
   State<StatefulWidget> createState() => _RegisterPageState();
 }
