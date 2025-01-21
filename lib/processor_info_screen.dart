@@ -148,5 +148,69 @@ class _ProcessorInfoScreenState extends State<ProcessorInfoScreen> {
     }
 
     int cpuCores = _getCpuCoreCount();
+    List<String> cpuFrequencies = await _getCpuFrequencies();
+    String? basebandVersion = await _getBasebandVersion();
+
+    return {
+      'processor': androidInfo.hardware,
+      'processorModel': processorModel ?? "Неизвестно",
+      'cpuCores': cpuCores.toString(),
+      'cpuFrequencies': cpuFrequencies,
+      'androidId': androidInfo.id,
+      'host': androidInfo.host,
+      'bootloader': androidInfo.bootloader,
+      'basebandVersion': basebandVersion ?? "Неизвестно",
+    };
+  }
+
+  Future<void> _requestPermissions() async {
+    if (await Permission.manageExternalStorage.request().isDenied) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Необходимо разрешение для чтения системных файлов")));
+    }
+  }
+
+  int _getCpuCoreCount() {
+    return Platform.numberOfProcessors;
+  }
+
+  Future<List<String>> _getCpuFrequencies() async {
+    List<String> frequencies = [];
+    int coreIndex = 0;
+    while (true) {
+      try {
+        final frequency = await _readFileAsString(
+            '/sys/devices/system/cpu/cpu$coreIndex/cpufreq/cpuinfo_max_freq');
+        if (frequency == null) break;
+        final frequencyInGHz = (int.parse(frequency) / 1e6).toStringAsFixed(2);
+        frequencies.add(frequencyInGHz);
+        coreIndex++;
+      } catch (e) {
+        break;
+      }
+    }
+    return frequencies.isEmpty ? ['Неверные данные'] : frequencies;
+  }
+
+  Future<String>? _getBasebandVersion() async {
+    try {
+      ProcessResult result =
+          await Process.run("getprop", ['gsm.version.baseband']);
+      return result.stdout.trim();
+    } catch (e) {
+      return 'Неизвестно';
+    }
+  }
+
+  Future<String?> _readFileAsString(String path) async {
+    try {
+      final file = File(path);
+      if (await file.exists()) {
+        return await file.readAsString();
+      }
+    } catch (e) {
+      return null;
+    }
+    return null;
   }
 }
