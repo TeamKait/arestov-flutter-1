@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class CodecsScreen extends StatefulWidget {
+class CodecsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,9 +103,55 @@ class CodecsScreen extends StatefulWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: child)
+                  child: Text("Закрыть"))
             ],
           );
         });
+  }
+
+  void _showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+    );
+  }
+
+  Future<List<String>> _getCodecs() async {
+    List<String> codecs = [];
+    List<String> codecsFiles = [
+      "/etc/media_codecs.xml",
+      "/system/etc/media_codecs.xml",
+      "/vendor/etc/media_codecs.xml",
+    ];
+
+    for (String filePath in codecsFiles) {
+      try {
+        final file = File(filePath);
+        if (await file.exists()) {
+          final content = await file.readAsString();
+          codecs.addAll(_parseCodecs(content));
+        }
+      } catch (e) {
+        codecs = ['Кодеки не найдены'];
+      }
+    }
+    return codecs;
+  }
+
+  List<String> _parseCodecs(String content) {
+    List<String> codecs = [];
+    RegExp regExp = RegExp(r'<MediaCodec name="([^"]+)"');
+    Iterable<RegExpMatch> matches = regExp.allMatches(content);
+
+    for (RegExpMatch match in matches) {
+      if (match.groupCount > 0) {
+        codecs.add(match.group(1)!);
+      }
+    }
+
+    return codecs;
   }
 }
