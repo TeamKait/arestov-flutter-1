@@ -119,7 +119,7 @@ class SystemInfoScreen extends StatelessWidget {
                         child: Text("Скопировать данные о системе"), 
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue))
                     ],
-                  )
+                  ),
                   SizedBox(height: 20),
                   ExpansionTile(
                     title: Text(
