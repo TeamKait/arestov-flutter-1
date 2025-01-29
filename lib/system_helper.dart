@@ -87,4 +87,54 @@ Future<Map<String, String>> getMemoryInfo() async{
   int totalRamBytes = await getTotalMemory();
   int freeRamBytes= await getFreeMemory();
   Map<String, int> storageInfo = await getStorageInfo();
+
+  int freeStorageBytes = storageInfo['free'] ?? 0;
+  int totalStorageBytes = storageInfo['total'] ?? 0;
+
+  double totalRamGB = totalRamBytes / (1024*1024*1024);
+  double freeRamGB = freeRamBytes / (1024*1024*1024);
+  double freeStorageGB = freeStorageBytes / (1024*1024*1024);
+  double totalStorageGB = totalStorageBytes / (1024*1024*1024); 
+
+  return {
+    'ramType': ramType,
+    'storageTechnology': storageTechnology,
+    'totalRamGB': totalRamGB.toStringAsFixed(2),
+    'freeRamGB': freeRamGB.toStringAsFixed(2),
+    'freeStorageGB': freeStorageGB.toStringAsFixed(2),
+    'totalStorageGB': totalStorageGB.toStringAsFixed(2),
+  };
+}
+
+Future<Map<String, String>> getSystemInfo() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+  String androidVersion = androidInfo.version.release;
+  String deviceModel = androidInfo.model;
+  String manufacturer = androidInfo.manufacturer;
+  String deviceName = androidInfo.device;
+  String androidSdkInt = androidInfo.version.sdkInt.toString();
+
+  String board = androidInfo.board;
+  String display = androidInfo.display;
+  
+  Map<String, String> deviceSpecificInfo = await getDeviceSpecificInfo(deviceModel);
+
+  return{
+    'androidVersion':androidVersion,
+    'deviceModel':deviceModel,
+    'manufacturer':manufacturer,
+    'deviceName':deviceName,
+    'androidSdkInt':androidSdkInt,
+    'board':board,
+    'display':display,
+
+    'resolution':deviceSpecificInfo['resolution'] ?? 'Неизвестно',
+    'density':deviceSpecificInfo['density'] ?? 'Неизвестно',
+    'refreshRate':deviceSpecificInfo['refreshRate'] ?? 'Неизвестно',
+    'hdr':deviceSpecificInfo['hdr'] ?? 'Неизвестно',
+    'phoneSize':deviceSpecificInfo['phoneSize'] ?? 'Неизвестно',
+    'weight':deviceSpecificInfo['weight'] ?? 'Неизвестно',
+  };
 }
