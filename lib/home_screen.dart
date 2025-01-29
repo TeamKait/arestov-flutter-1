@@ -13,7 +13,7 @@ import 'battery_info_screen.dart';
 import 'login_page.dart';
 import 'testing_screen.dart';
 import 'about_screen.dart';
-import 'device_feature_screen.dart';
+import 'device_features_screen.dart';
 import 'sensor_screen.dart';
 import 'reports_screen.dart';
 import 'register_screen.dart';

@@ -55,13 +55,11 @@ class SystemInfoScreen extends StatelessWidget {
           };
         }),
         builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator())
-          }
-          else if(snapshot.hasError){
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
             return Center(child: Text('Ошибка: ${snapshot.error}'));
-          }
-          else{
+          } else {
             Map<String, String> data = snapshot.data ?? {};
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -81,43 +79,64 @@ class SystemInfoScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(8.0)
-                        ),
+                            color: Colors.grey.shade100,
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(8.0)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Тип ОЗУ: ${data['ramType']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-                            
-                            Text("Объем ОЗУ: ${data['totalRamGB']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-                            
-                            Text("Свободная ОЗУ: ${data['freeRamGB']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Общее хранилище: ${data['totalStorageGB']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-                            
-                            Text("Свободное хранилище: ${data['freeStorageGB']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Технология: ${data['storageTechnology']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
+                            Text("Тип ОЗУ: ${data['ramType']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Объем ОЗУ: ${data['totalRamGB']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Свободная ОЗУ: ${data['freeRamGB']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Общее хранилище: ${data['totalStorageGB']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                                "Свободное хранилище: ${data['freeStorageGB']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Технология: ${data['storageTechnology']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
                           ],
                         ),
                       ),
-                      ElevatedButton(onPressed: () => _copyClipboard(
-                        "Тип ОЗУ: ${data['ramType']}\n"
-                        "Объем ОЗУ: ${data['totalRamGB']} ГБ\n"
-                        "Свободная ОЗУ: ${data['freeRamGB']} ГБ\n"
-                        "Общее хранилище: ${data['totalStorageGB']} ГБ\n"
-                        "Свободное хранилище: ${data['freeStorageGB']} ГБ\n"
-                        "Технология: ${data['storageTechnology']}\n"
-                        , context), 
-                        child: Text("Скопировать данные о системе"), 
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue))
+                      ElevatedButton(
+                          onPressed: () => _copyClipboard(
+                              "Тип ОЗУ: ${data['ramType']}\n"
+                              "Объем ОЗУ: ${data['totalRamGB']} ГБ\n"
+                              "Свободная ОЗУ: ${data['freeRamGB']} ГБ\n"
+                              "Общее хранилище: ${data['totalStorageGB']} ГБ\n"
+                              "Свободное хранилище: ${data['freeStorageGB']} ГБ\n"
+                              "Технология: ${data['storageTechnology']}\n",
+                              context),
+                          child: Text("Скопировать данные о системе"),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue))
                     ],
                   ),
                   SizedBox(height: 20),
@@ -125,79 +144,117 @@ class SystemInfoScreen extends StatelessWidget {
                     title: Text(
                       'Система',
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
                     ),
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: Colors.grey.shade100)
-                        ),
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(color: Colors.grey.shade100)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Версия Android: ${data['androidVersion']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-                            
-                            Text("Модель устройства: ${data['deviceModel']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-                            
-                            Text("Производитель: ${data['manufacturer']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Название устройства: ${data['deviceModel']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-                            
-                            Text("Версия SDK: ${data['androidSdkInt']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Плата: ${data['board']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Дисплей: ${data['display']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Разрешение: ${data['resolution']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Плотность: ${data['density']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Частота обновления: ${data['refreshRate']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("HDR: ${data['hdr']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Размер телефона: ${data['phonesize']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
-
-                            Text("Вес телефона: ${data['weight']}", style: TextStyle(fontSize: 16, color: Colors.black)),
-                            SizedBox(height: 8,),
+                            Text("Версия Android: ${data['androidVersion']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Модель устройства: ${data['deviceModel']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Производитель: ${data['manufacturer']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Название устройства: ${data['deviceModel']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Версия SDK: ${data['androidSdkInt']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Плата: ${data['board']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Дисплей: ${data['display']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Разрешение: ${data['resolution']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Плотность: ${data['density']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Частота обновления: ${data['refreshRate']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("HDR: ${data['hdr']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Размер телефона: ${data['phonesize']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Вес телефона: ${data['weight']}",
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black)),
+                            SizedBox(
+                              height: 8,
+                            ),
                           ],
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () => _copyClipboard(
-                          "Версия Android: ${data['androidVersion']}\n"
-                          "Модель устройства: ${data['deviceModel']}\n"
-                          "Производитель: ${data['manufacturer']}\n"
-                          "Название устройства: ${data['deviceModel']}\n"
-                          "Версия SDK: ${data['androidSdkInt']}\n"
-                          "Плата: ${data['board']}\n"
-                          "Дисплей: ${data['display']}\n"
-                          "Разрешение: ${data['resolution']}\n"
-                          "Плотность: ${data['density']}\n"
-                          "Частота обновления: ${data['refreshRate']}\n"
-                          "HDR: ${data['hdr']}\n"
-                          "Размер телефона: ${data['phonesize']}\n"
-                          "Вес телефона: ${data['weight']}"
-                        , context),
+                            "Версия Android: ${data['androidVersion']}\n"
+                            "Модель устройства: ${data['deviceModel']}\n"
+                            "Производитель: ${data['manufacturer']}\n"
+                            "Название устройства: ${data['deviceModel']}\n"
+                            "Версия SDK: ${data['androidSdkInt']}\n"
+                            "Плата: ${data['board']}\n"
+                            "Дисплей: ${data['display']}\n"
+                            "Разрешение: ${data['resolution']}\n"
+                            "Плотность: ${data['density']}\n"
+                            "Частота обновления: ${data['refreshRate']}\n"
+                            "HDR: ${data['hdr']}\n"
+                            "Размер телефона: ${data['phonesize']}\n"
+                            "Вес телефона: ${data['weight']}",
+                            context),
                         child: Text("Копировать данные о системе"),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
