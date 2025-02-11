@@ -8,8 +8,6 @@ import 'app_localizations.dart';
 
 // Класс виджета
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -32,6 +30,7 @@ class _HomePageState extends State<HomePage> {
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
         AppLocalizationsDelegate(),
       ],
       supportedLocales: const [

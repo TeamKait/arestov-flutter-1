@@ -43,6 +43,7 @@ dependencies:
   webview_flutter_android: ^3.16.6
   webview_flutter_wkwebview: ^3.14.0
   permission_handler: ^11.3.1
+  pdf: ^3.11.1
   battery_info: ^1.1.1
   fluttertoast: ^8.0.8
   sensors_plus: ^6.0.1
@@ -90,6 +91,7 @@ flutter:
   assets:
     - assets/lang/en.json
     - assets/lang/ru.json
+    - assets/fonts/Roboto-Regular.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

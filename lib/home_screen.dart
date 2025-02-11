@@ -28,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _appWithSizeAndIcon = [];
-  final String _deviceInfo = '';
+  String _deviceInfo = '';
   String _sortCriterion = 'name';
 
   @override
@@ -68,6 +68,16 @@ class _HomeScreenState extends State<HomeScreen> {
       apps.sort((a, b) =>
           (a['sizeValue'] as double).compareTo(b['sizeValue'] as double));
     }
+  }
+
+  Future<void> _getDeviceInfo() async {
+    DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    AndroidDeviceInfo androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+
+    setState(() {
+      _deviceInfo =
+          'Device: ${androidDeviceInfo.model}, Android version ${androidDeviceInfo.version.release}';
+    });
   }
 
   void _onSortSelected(String criterion) {
@@ -121,8 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   String formattedDateTime =
                       DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now());
                   return Text(formattedDateTime,
-                      style:
-                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold));
                 },
               )),
             )
@@ -187,38 +197,51 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: const Text("Аккумулятор"))),
                 const SizedBox(width: 8),
-                Expanded(child: TextButton(style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  backgroundColor: Colors.teal[300],
-                  foregroundColor: Colors.white,
-                  textStyle: const TextStyle(fontSize: 14 )
-                ),onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SystemInfoScreen()))
-                }, child: const Text("Система",)))
+                Expanded(
+                    child: TextButton(
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            backgroundColor: Colors.teal[300],
+                            foregroundColor: Colors.white,
+                            textStyle: const TextStyle(fontSize: 14)),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SystemInfoScreen()));
+                        },
+                        child: const Text(
+                          "Система",
+                        )))
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(child: TextButton(onPressed: () {
-                  Navigator.push(
-                    context, 
-                  MaterialPageRoute(builder: (context) => TestingScreen()));
-                },
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  backgroundColor: Colors.teal[300],
-                  foregroundColor: Colors.white,
-                  textStyle: const TextStyle(fontSize: 14),
-                ),
-                child: const Text("Тестирование"),
-                )),
-                Expanded(child: TextButton(
+                Expanded(
+                    child: TextButton(
                   onPressed: () {
-                  Navigator.push(
-                    context, 
-                  MaterialPageRoute(builder: (context) => AboutScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TestingScreen()));
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    backgroundColor: Colors.teal[300],
+                    foregroundColor: Colors.white,
+                    textStyle: const TextStyle(fontSize: 14),
+                  ),
+                  child: const Text("Тестирование"),
+                )),
+                Expanded(
+                    child: TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AboutScreen()));
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -227,46 +250,101 @@ class _HomeScreenState extends State<HomeScreen> {
                     textStyle: const TextStyle(fontSize: 14),
                   ),
                   child: const Text("О приложении"),
-                  )
-                ),
-                Expanded(child: TextButton(onPressed: () {
-                  Navigator.push(
-                    context, 
-                  MaterialPageRoute(builder: (context) => DeviceFeaturesScreen()));
-                },
-                style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  backgroundColor: Colors.teal[300],
-                  foregroundColor: Colors.white,
-                  textStyle: const TextStyle(fontSize: 14),
-                ),
-                child: const Text("Устройства"),
+                )),
+                Expanded(
+                    child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DeviceFeaturesScreen()));
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    backgroundColor: Colors.teal[300],
+                    foregroundColor: Colors.white,
+                    textStyle: const TextStyle(fontSize: 14),
+                  ),
+                  child: const Text("Устройства"),
                 )),
               ],
             ),
-            const SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: 
-                  TextButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SensorsScreen()));
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      backgroundColor: Colors.teal[300],
-                      foregroundColor: Colors.white,
-                      textStyle: const TextStyle(fontSize: 14),
-                    ),
-                    child: const Text("Датчики")
-                  )
-                ),
-                const SizedBox(width: 8,),
-                Expanded(child: child)
-              ],
-            )
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: _appWithSizeAndIcon.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: _appWithSizeAndIcon.length,
+                      itemBuilder: (context, index) {
+                        var appWithSizeAndIcon = _appWithSizeAndIcon[index];
+                        Application app = appWithSizeAndIcon['app'];
+                        String size = appWithSizeAndIcon['size'];
+                        Uint8List? icon = appWithSizeAndIcon['icon'];
+
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.0),
+                          padding: EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 3))
+                              ],
+                              border: Border.all(
+                                  color: Colors.teal[300]!, width: 2)),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      app.appName,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Text(
+                                      'Package: ${app.packageName}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Text(
+                                      'Size: $size',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey[700],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              if (icon != null)
+                                Image.memory(icon, width: 40, height: 40),
+                            ],
+                          ),
+                        );
+                      }),
+            ),
           ],
         ),
       ),

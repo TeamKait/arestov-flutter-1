@@ -12,7 +12,7 @@ import 'register_page.dart';
 // Класс виджета
 class LoginPage extends StatefulWidget {
   final Function(Locale) onLocaleChange;
-  const LoginPage({super.key, required this.onLocaleChange});
+  const LoginPage({required this.onLocaleChange});
   @override
   _LoginPageState createState() => _LoginPageState();
 }
