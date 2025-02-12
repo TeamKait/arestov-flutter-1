@@ -17,10 +17,10 @@ class TestingScreen extends StatefulWidget {
 }
 
 class _TestingScreenState extends State<TestingScreen> {
-  String _connectionStatus = 'Hensser-no';
+  String _connectionStatus = 'Неизвестно';
   final NetworkInfo _networkInfo = NetworkInfo();
   final FlutterSpeedtest _speedtest = FlutterSpeedtest(
-    baseUrl: 'https://speedtest.globalxtreme.net:8088',
+    baseUrl: 'https://speedtest.globalxtreme.net:8080',
     pathDownload: '/download',
     pathUpload: '/upload',
     pathResponseTime: '/ping',
@@ -92,8 +92,10 @@ class _TestingScreenState extends State<TestingScreen> {
     });
 
     try {
+    
       _speedtest.getDataspeedtest(
         downloadOnProgress: (percent, transferRate) {
+          
           if (transferRate < 1000) {
             setState(() {
               _progressDownload = transferRate;
@@ -156,7 +158,7 @@ class _TestingScreenState extends State<TestingScreen> {
               children: [
                 pw.Text('Результаты теста скорости',
                     style: pw.TextStyle(fontSize: 24, font: robotoFont)),
-                pw.SizedBox(height: 30),
+                pw.SizedBox(height: 20),
                 pw.Text('Имя Wi-Fi: ${wifiName ?? 'Неизвестно'}',
                     style: pw.TextStyle(font: robotoFont)),
                 pw.Text('BSSID: ${wifiBSSID ?? 'Неизвестно'}',
@@ -168,16 +170,16 @@ class _TestingScreenState extends State<TestingScreen> {
                 pw.Text(
                     'Широковещательный адрес: ${wifiBroadcast ?? 'Неизвестно'}',
                     style: pw.TextStyle(font: robotoFont)),
-                pw.Text('Маска подсети: ${wifiSubmask ?? 'Неизвестно'}',
+                pw.Text('IP шлюза: ${wifiGatewayIP ?? 'Неизвестно'}',
                     style: pw.TextStyle(font: robotoFont)),
-                pw.Text('Broadcast: ${wifiBroadcast ?? 'Неизвестно'}',
+                pw.Text('Маска подсети: ${wifiSubmask ?? 'Неизвестно'}',
                     style: pw.TextStyle(font: robotoFont)),
                 pw.SizedBox(height: 20),
                 pw.Text(
-                    'Скорость загрузки: ${_progressDownload.toStringAsFixed(2)} Mbps',
+                    'Скорость загрузки: ${_progressDownload.toStringAsFixed(2)} Мбит/с',
                     style: pw.TextStyle(font: robotoFont)),
                 pw.Text(
-                    'Скорость отдачи: ${_progressUpload.toStringAsFixed(2)} Mbps',
+                    'Скорость отдачи: ${_progressUpload.toStringAsFixed(2)} Мбит/с',
                     style: pw.TextStyle(font: robotoFont)),
                 pw.Text('Пинг: $_ping мс',
                     style: pw.TextStyle(font: robotoFont)),
@@ -190,7 +192,7 @@ class _TestingScreenState extends State<TestingScreen> {
       ),
     );
 
-    Directory directory;
+    Directory? directory;
     if (Platform.isAndroid) {
       directory = Directory("/storage/emulated/0/DCIM");
     } else {
@@ -256,7 +258,7 @@ class _TestingScreenState extends State<TestingScreen> {
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 20),
@@ -264,24 +266,13 @@ class _TestingScreenState extends State<TestingScreen> {
                         _connectionStatus,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _isTesting ? null : _startSpeedTest,
-                  child: Text("Начать тест скорости"),
-                ),
-                SizedBox(height: 20),
-                Container(
-                    // TODO: Дописать
-                    ),
-                SizedBox(
-                  height: 20,
-                ),
                 ElevatedButton(
                     onPressed: _isTesting ? null : _startSpeedTest,
                     child: Text('Начать тест скорости')),

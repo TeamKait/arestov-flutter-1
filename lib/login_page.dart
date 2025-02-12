@@ -100,11 +100,16 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () async {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
                         String username = emailController.text;
                         String password = passwordController.text;
                         bool isAuthenticated =
                             await dbHelper.authUser(username, password);
                         if (isAuthenticated) {
+                          // Navi
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

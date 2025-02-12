@@ -14,9 +14,9 @@ class DeviceFeaturesScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildSectionTitle('Поддерживаемые функции', Icons.info),
+              // _buildSectionTitle('Поддерживаемые функции', Icons.info),
               Divider(),
-              _buildFeaturesSection(),
+              // _buildFeaturesSection(),
             ],
           ),
         ),

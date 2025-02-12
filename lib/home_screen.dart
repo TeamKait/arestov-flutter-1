@@ -2,21 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:device_apps/device_apps.dart';
+// import 'package:device_apps/device_apps.dart';
 import 'dart:io';
 import 'dart:typed_data';
 
 // Импортирование сцен
 import 'processor_info_screen.dart';
 import 'system_info_screen.dart';
-import 'battery_info_screen.dart';
+// import 'battery_info_screen.dart';
 import 'login_page.dart';
 import 'testing_screen.dart';
-import 'about_screen.dart';
+// import 'about_screen.dart';
 import 'device_features_screen.dart';
-import 'sensor_screen.dart';
-import 'reports_screen.dart';
-import 'register_screen.dart';
+// import 'sensor_screen.dart';
+// import 'reports_screen.dart';
+// import 'register_screen.dart';
 
 // Класс сцены
 class HomeScreen extends StatefulWidget {
@@ -33,33 +33,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _loadInstalledAppsWithSizeAndIcon();
+    // _loadInstalledAppsWithSizeAndIcon();
     _getDeviceInfo();
   }
 
   // Метод, загружающий приложения и информацию о них
-  Future<void> _loadInstalledAppsWithSizeAndIcon() async {
-    List<Application> apps = await DeviceApps.getInstalledApplications(
-      includeSystemApps: true,
-      includeAppIcons: true,
-    );
-    List<Map<String, dynamic>> appsWithSizeAndIcon = [];
-    for (var app in apps) {
-      File apkFile = File(app.apkFilePath);
-      double sizeInMb =
-          apkFile.existsSync() ? apkFile.lengthSync() / (1024 * 1024) : 0.0;
-      appsWithSizeAndIcon.add({
-        'app': app,
-        'size': sizeInMb > 0 ? '${sizeInMb.toStringAsFixed(2)} MB' : 'N/A',
-        'sizeValue': sizeInMb,
-        'icon': app is ApplicationWithIcon ? app.icon : null,
-      });
-    }
-    _sortApps(appsWithSizeAndIcon);
-    setState(() {
-      _appWithSizeAndIcon = appsWithSizeAndIcon;
-    });
-  }
+  // Future<void> _loadInstalledAppsWithSizeAndIcon() async {
+  //   List<Application> apps = await DeviceApps.getInstalledApplications(
+  //     includeSystemApps: true,
+  //     includeAppIcons: true,
+  //   );
+  //   List<Map<String, dynamic>> appsWithSizeAndIcon = [];
+  //   for (var app in apps) {
+  //     File apkFile = File(app.apkFilePath);
+  //     double sizeInMb =
+  //         apkFile.existsSync() ? apkFile.lengthSync() / (1024 * 1024) : 0.0;
+  //     appsWithSizeAndIcon.add({
+  //       'app': app,
+  //       'size': sizeInMb > 0 ? '${sizeInMb.toStringAsFixed(2)} MB' : 'N/A',
+  //       'sizeValue': sizeInMb,
+  //       'icon': app is ApplicationWithIcon ? app.icon : null,
+  //     });
+  //   }
+  //   _sortApps(appsWithSizeAndIcon);
+  //   setState(() {
+  //     _appWithSizeAndIcon = appsWithSizeAndIcon;
+  //   });
+  // }
 
   void _sortApps(List<Map<String, dynamic>> apps) {
     if (_sortCriterion == 'name') {
@@ -184,10 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BatteryInfoScreen()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => BatteryInfoScreen()));
                         },
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12),
@@ -240,8 +240,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     child: TextButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AboutScreen()));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => AboutScreen()));
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -279,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: _appWithSizeAndIcon.length,
                       itemBuilder: (context, index) {
                         var appWithSizeAndIcon = _appWithSizeAndIcon[index];
-                        Application app = appWithSizeAndIcon['app'];
+                        // Application app = appWithSizeAndIcon['app'];
                         String size = appWithSizeAndIcon['size'];
                         Uint8List? icon = appWithSizeAndIcon['icon'];
 
@@ -305,23 +305,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      app.appName,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    // Text(
+                                    //   app.appName,
+                                    //   style: TextStyle(
+                                    //     fontSize: 18,
+                                    //     fontWeight: FontWeight.bold,
+                                    //   ),
+                                    // ),
                                     SizedBox(
                                       height: 8.0,
                                     ),
-                                    Text(
-                                      'Package: ${app.packageName}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[700],
-                                      ),
-                                    ),
+                                    // Text(
+                                    //   'Package: ${app.packageName}',
+                                    //   style: TextStyle(
+                                    //     fontSize: 14,
+                                    //     color: Colors.grey[700],
+                                    //   ),
+                                    // ),
                                     SizedBox(
                                       height: 8.0,
                                     ),
