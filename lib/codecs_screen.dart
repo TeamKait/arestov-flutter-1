@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'helpers.dart';
 
 class CodecsScreen extends StatelessWidget {
   @override
@@ -53,6 +54,27 @@ class CodecsScreen extends StatelessWidget {
                       );
                     },
                     child: Text("Показать SnackBar"),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      SuccessSnackBar(context, "Успех!");
+                    },
+                    child: Text("Показать Success SnackBar"),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      WarningSnackBar(context, "Предупреждение");
+                    },
+                    child: Text("Показать Warning SnackBar"),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      ErrorSnackBar(context, "Ошибка!");
+                    },
+                    child: Text("Показать Error SnackBar"),
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
