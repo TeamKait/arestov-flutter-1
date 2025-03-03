@@ -15,8 +15,8 @@ import 'login_page.dart';
 import 'testing_screen.dart';
 import 'about_screen.dart';
 import 'device_features_screen.dart';
-// import 'sensor_screen.dart';
-// import 'reports_screen.dart';
+import 'sensors_screen.dart';
+import 'reports_screen.dart';
 // import 'register_screen.dart';
 
 // Класс сцены
@@ -274,6 +274,37 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
               ],
             ),
+            const SizedBox(height: 10),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SensorsScreen()));
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(fontSize: 14),
+                ),
+                child: const Text("Датчики"),
+              )),
+              Expanded(
+                  child: TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ReportsScreen()));
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(fontSize: 14),
+                ),
+                child: const Text("Отчеты"),
+              )),
+            ]),
             const SizedBox(
               height: 10,
             ),
