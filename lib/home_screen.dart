@@ -1,5 +1,6 @@
 // Импортирование библиотек
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/web_screen.dart';
 import 'package:installed_apps/app_info.dart';
 import 'package:intl/intl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -303,6 +304,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   textStyle: const TextStyle(fontSize: 14),
                 ),
                 child: const Text("Отчеты"),
+              )),
+              
+              Expanded(
+                  child: TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WebViewScreen()));
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(fontSize: 14),
+                ),
+                child: const Text("Наш сайт"),
               )),
             ]),
             const SizedBox(
