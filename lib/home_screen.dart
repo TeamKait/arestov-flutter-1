@@ -18,7 +18,7 @@ import 'about_screen.dart';
 import 'device_features_screen.dart';
 import 'sensors_screen.dart';
 import 'reports_screen.dart';
-// import 'register_screen.dart';
+import 'register_screen.dart';
 
 // Класс сцены
 class HomeScreen extends StatefulWidget {
@@ -46,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
     List<AppInfo> apps = await InstalledApps.getInstalledApps(false, true);
     List<Map<String, dynamic>> appsWithSizeAndIcon = [];
     for (var app in apps) {
-      print(app.builtWith);
       // File apkFile = File(app.apkFilePath);
       // double sizeInMb =
       //     apkFile.existsSync() ? apkFile.lengthSync() / (1024 * 1024) : 0.0;
@@ -291,6 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: const Text("Датчики"),
               )),
+              const SizedBox(height: 10),
               Expanded(
                   child: TextButton(
                 onPressed: () {
@@ -305,7 +305,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: const Text("Отчеты"),
               )),
-              
+              const SizedBox(height: 10),
+              Expanded(
+                  child: TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterScreen()));
+                },
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  backgroundColor: Colors.teal[300],
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(fontSize: 14),
+                ),
+                child: const Text("Реестр"),
+              )),
+              const SizedBox(height: 10),
               Expanded(
                   child: TextButton(
                 onPressed: () {

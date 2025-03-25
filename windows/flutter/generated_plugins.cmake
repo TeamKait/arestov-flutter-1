@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  battery_plus
   flutter_media_info
   permission_handler_windows
   url_launcher_windows

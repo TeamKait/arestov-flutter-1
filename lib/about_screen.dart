@@ -39,7 +39,7 @@ class AboutScreen extends StatelessWidget {
                   border: Border.all(
                     color: Colors.teal[300]!,
                     width: 2.0,
-                  ),
+                  ), //asdd23
                   borderRadius: BorderRadius.circular(10)),
               child: Text(
                 'Это приложение предназначено для отображения информации о системе и устройствах, установленных на устройстве приложениях, а также для проведения тестирования. Вы можете получить подробные данные о процессоре, аккумуляторе',
