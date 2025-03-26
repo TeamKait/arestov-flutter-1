@@ -1,6 +1,6 @@
 // Импортирование библиотек
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/web_screen.dart';
+import 'web_screen.dart';
 import 'package:installed_apps/app_info.dart';
 import 'package:intl/intl.dart';
 import 'package:device_info_plus/device_info_plus.dart';
