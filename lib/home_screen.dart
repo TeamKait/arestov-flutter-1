@@ -19,6 +19,7 @@ import 'device_features_screen.dart';
 import 'sensors_screen.dart';
 import 'reports_screen.dart';
 import 'register_screen.dart';
+import 'test_menu.dart';
 
 // Класс сцены
 class HomeScreen extends StatefulWidget {
@@ -240,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     foregroundColor: Colors.white,
                     textStyle: const TextStyle(fontSize: 14),
                   ),
-                  child: const Text("Тестирование"),
+                  child: const Text("Сеть"),
                 )),
                 Expanded(
                     child: TextButton(
@@ -254,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     foregroundColor: Colors.white,
                     textStyle: const TextStyle(fontSize: 14),
                   ),
-                  child: const Text("О приложении"),
+                  child: const Text("Информация"),
                 )),
                 Expanded(
                     child: TextButton(
@@ -271,6 +272,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     textStyle: const TextStyle(fontSize: 14),
                   ),
                   child: const Text("Устройства"),
+                )),
+                Expanded(
+                    child: TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TestMenu()));
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    backgroundColor: Colors.teal[300],
+                    foregroundColor: Colors.white,
+                    textStyle: const TextStyle(fontSize: 14),
+                  ),
+                  child: const Text("Тесты"),
                 )),
               ],
             ),

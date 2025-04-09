@@ -161,6 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: ff6785f7e9e3c38ac98b2fb035701789de90154024a75b6cb926445e83197d1c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.2"
   clipboard:
     dependency: "direct main"
     description:
@@ -294,6 +302,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_launcher_icons:
+    dependency: "direct dev"
+    description:
+      name: flutter_launcher_icons
+      sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -1074,6 +1090,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  vibration:
+    dependency: "direct main"
+    description:
+      name: vibration
+      sha256: "06588a845a4ebc73ab7ff7da555c2b3dbcd9676164b5856a38bf0b2287f1045d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.0"
+  vibration_platform_interface:
+    dependency: transitive
+    description:
+      name: vibration_platform_interface
+      sha256: "6ffeee63547562a6fef53c05a41d4fdcae2c0595b83ef59a4813b0612cd2bc36"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   vm_service:
     dependency: transitive
     description:
