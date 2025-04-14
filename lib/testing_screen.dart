@@ -92,10 +92,8 @@ class _TestingScreenState extends State<TestingScreen> {
     });
 
     try {
-    
       _speedtest.getDataspeedtest(
         downloadOnProgress: (percent, transferRate) {
-          
           if (transferRate < 1000) {
             setState(() {
               _progressDownload = transferRate;

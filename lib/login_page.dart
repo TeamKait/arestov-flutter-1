@@ -1,6 +1,6 @@
 // Импортирование библиотек
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app_localizations.dart';
+import 'app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 

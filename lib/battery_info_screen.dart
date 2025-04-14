@@ -1,305 +1,250 @@
-// lib/battery_info_screen.dart
-
-import 'dart:async'; // Подключаем для использования таймера.
-import 'package:flutter/material.dart'; // Импортируем пакет Flutter для работы с материалами (UI-компоненты).
-import 'package:battery_plus/battery_plus.dart'; // Импортируем пакет для работы с информацией о батарее.
-import 'package:battery_info/battery_info_plugin.dart'; // Импортируем плагин для получения информации о батарее.
-import 'package:battery_info/model/android_battery_info.dart'; // Импортируем модель для информации о батарее Android.
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:battery_plus/battery_plus.dart';
+// import 'package:battery_info/battery_info_plugin.dart';
+// import 'package:battery_info/model/android_battery_info.dart';
 
 class BatteryInfoScreen extends StatefulWidget {
-  // Определяем StatefulWidget для экрана информации о батарее.
   @override
-  _BatteryInfoScreenState createState() =>
-      _BatteryInfoScreenState(); // Создаем состояние для BatteryInfoScreen.
+  State<StatefulWidget> createState() => _BatteryInfoScreenState();
 }
 
 class _BatteryInfoScreenState extends State<BatteryInfoScreen> {
-  // Определяем состояние для экрана информации о батарее.
-  final Battery _battery =
-      Battery(); // Создаем экземпляр Battery для получения информации о батарее.
-  int _batteryLevel = 0; // Уровень заряда батареи.
-  BatteryState _batteryState = BatteryState.unknown; // Состояние батареи.
-  double _batteryTemperature = 0.0; // Температура батареи.
-  double _batteryVoltage = 0.0; // Напряжение батареи.
-  bool _isLoading = false; // Флаг для индикации загрузки.
-  Timer? _timer; // Таймер для обновления информации.
+  final Battery _battery = Battery();
+  int _batteryLevel = 0;
+  BatteryState _batteryState = BatteryState.unknown;
+  double _batteryTemperature = 0.0;
+  double _batteryVoltage = 0.0;
+  bool _isLoading = false;
+  Timer? _timer;
 
   @override
   void initState() {
-    // Метод, вызываемый при инициализации состояния.
-    super.initState(); // Вызываем метод родительского класса.
-    _getBatteryInfo(); // Получаем информацию о батарее.
+    super.initState();
+    _getBatteryInfo();
     _battery.onBatteryStateChanged.listen((BatteryState state) {
-      // Подписываемся на изменения состояния батареи.
       if (mounted) {
-        // Проверяем, что виджет все еще существует.
         setState(() {
-          _batteryState = state; // Обновляем состояние батареи.
+          _batteryState = state;
         });
       }
     });
   }
 
   Future<void> _getBatteryInfo() async {
-    // Асинхронный метод для получения информации о батарее.
     try {
-      final batteryLevel =
-          await _battery.batteryLevel; // Получаем уровень заряда батареи.
-      final batteryState =
-          await _battery.batteryState; // Получаем состояние батареи.
-      final AndroidBatteryInfo? androidBatteryInfo = await BatteryInfoPlugin()
-          .androidBatteryInfo; // Получаем информацию о батарее Android.
+      final batteryLevel = await _battery.batteryLevel;
+      final batteryState = await _battery.batteryState;
+      print(batteryState);
+
+      // final AndroidBatteryInfo? androidBatteryInfo =
+      //     await BatteryInfoPlugin().androidBatteryInfo;
 
       if (mounted) {
-        // Проверяем, что виджет все еще существует.
         setState(() {
-          // Обновляем состояние.
-          _batteryLevel = batteryLevel; // Устанавливаем уровень заряда батареи.
-          _batteryState = batteryState; // Устанавливаем состояние батареи.
-          _batteryTemperature = androidBatteryInfo?.temperature?.toDouble() ??
-              0.0; // Устанавливаем температуру батареи.
-          _batteryVoltage =
-              (androidBatteryInfo?.voltage ?? 0) / 1000; // Преобразуем мВ в В.
+          _batteryLevel = batteryLevel;
+          _batteryState = batteryState;
+          // _batteryTemperature =
+          //     androidBatteryInfo?.temperature?.toDouble() ?? 0.0;
+          // _batteryVoltage = (androidBatteryInfo?.voltage ?? 0) / 1000;
         });
       }
     } catch (e) {
-      print(
-          'Ошибка получения информации об аккумуляторе: $e'); // Выводим ошибку в консоль.
+      print('Ошибка получения информации об аккумуляторе: $e');
     }
   }
 
-  // Функция для запуска обновления на 10 секунд.
   void _startUpdatingBatteryInfo() {
     setState(() {
-      _isLoading = true; // Показываем индикатор загрузки.
+      _isLoading = true;
     });
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      // Запускаем таймер, который срабатывает каждую секунду.
-      await _getBatteryInfo(); // Обновляем информацию о батарее.
-
+      await _getBatteryInfo();
       if (timer.tick >= 10) {
-        // После 10 секунд останавливаем таймер.
         timer.cancel();
         setState(() {
-          _isLoading = false; // Скрываем индикатор загрузки.
+          _isLoading = false;
         });
       }
     });
   }
 
   String _getBatteryStateDescription(BatteryState state) {
-    // Метод для получения описания состояния батареи.
     switch (state) {
       case BatteryState.charging:
-        return 'Заряжается'; // Описание для заряжающейся батареи.
+        return 'Заряжается';
       case BatteryState.discharging:
-        return 'Разряжается'; // Описание для разряжающейся батареи.
+        return 'Разряжается';
       case BatteryState.full:
-        return 'Полный заряд'; // Описание для полностью заряженной батареи.
+        return 'Полный заряд';
+      case BatteryState.connectedNotCharging:
+        return "Подключен";
       case BatteryState.unknown:
       default:
-        return 'Неизвестно'; // Описание для неизвестного состояния.
+        return "Неизвестно";
     }
   }
 
   Color _getBatteryLevelColor(int level) {
-    // Метод для получения цвета в зависимости от уровня заряда.
     if (level > 75) {
-      return Colors.green; // Зеленый цвет для уровня выше 75%.
+      return Colors.green;
     } else if (level < 20) {
-      return Colors.red; // Красный цвет для уровня ниже 20%.
+      return Colors.red;
     } else {
-      return Colors.orange; // Оранжевый цвет для уровня от 20% до 75%.
+      return Colors.orange;
     }
   }
 
   @override
   void dispose() {
-    // Метод, вызываемый при уничтожении виджета.
-    _timer?.cancel(); // Останавливаем таймер.
-    super.dispose(); // Вызываем метод родительского класса.
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Метод, который строит виджет.
     return Scaffold(
-      // Создаем Scaffold для основной структуры страницы.
       appBar: AppBar(
-        // Создаем верхнюю панель приложения.
-        title: Text('Информация об аккумуляторе'), // Заголовок панели.
-        backgroundColor: Colors.blueGrey[900], // Цвет фона панели.
-        elevation: 0, // Убираем тень.
+        title: Text('Информация об аккумуляторе'),
+        backgroundColor: Colors.blueGrey[900],
+        elevation: 0,
       ),
       body: SingleChildScrollView(
-        // Позволяем прокручивать содержимое.
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
-          // Столбец для размещения информации о батарее.
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Выравнивание по левому краю.
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Индикатор уровня заряда батареи с цветовой индикацией.
             Center(
-              // Центрируем индикатор.
               child: Stack(
-                // Стек для наложения индикатора и текста.
                 alignment: Alignment.center,
                 children: [
                   SizedBox(
-                    height: 150, // Высота индикатора.
-                    width: 150, // Ширина индикатора.
+                    height: 150,
+                    width: 150,
                     child: CircularProgressIndicator(
-                      // Индикатор загрузки.
-                      value: _batteryLevel / 100, // Уровень заряда.
-                      strokeWidth: 12, // Ширина окружности.
+                      value: _batteryLevel / 100,
+                      strokeWidth: 12,
+                      backgroundColor: Colors.grey[200],
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        // Цвет индикатора в зависимости от уровня.
-                        _getBatteryLevelColor(_batteryLevel),
-                      ),
-                      backgroundColor:
-                          Colors.grey[200], // Цвет фона индикатора.
+                          _getBatteryLevelColor(_batteryLevel)),
                     ),
                   ),
                   Text(
-                    // Отображаем уровень заряда в центре индикатора.
                     '$_batteryLevel%',
                     style: TextStyle(
-                      fontSize: 24, // Размер шрифта.
-                      fontWeight: FontWeight.bold, // Жирный шрифт.
-                      color: _getBatteryLevelColor(
-                          _batteryLevel), // Цвет текста в зависимости от уровня.
-                    ),
-                  ),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: _getBatteryLevelColor(_batteryLevel)),
+                  )
                 ],
               ),
             ),
-            SizedBox(height: 30), // Отступ после индикатора.
-
-            // Карточка с информацией о состоянии батареи.
+            SizedBox(
+              height: 30,
+            ),
             _buildInfoCard(
-              // Создаем карточку с информацией о состоянии батареи.
               title: 'Состояние',
-              value: _getBatteryStateDescription(
-                  _batteryState), // Описание состояния батареи.
-              icon: Icons.power, // Иконка для состояния.
-              backgroundColor: Colors.orange[100], // Цвет фона карточки.
+              value: _getBatteryStateDescription(_batteryState),
+              icon: Icons.power,
+              backgroundColor: Colors.orange[300],
             ),
-            SizedBox(height: 20), // Отступ после карточки.
-
-            // Карточка с информацией о температуре.
+            SizedBox(
+              height: 20,
+            ),
             _buildInfoCard(
-              // Создаем карточку с информацией о температуре.
               title: 'Температура',
-              value: '$_batteryTemperature°C', // Температура батареи.
-              icon: Icons.thermostat, // Иконка для температуры.
-              backgroundColor: Colors.blue[100], // Цвет фона карточки.
+              value: '$_batteryTemperature C',
+              icon: Icons.thermostat,
+              backgroundColor: Colors.orange[300],
             ),
-            SizedBox(height: 20), // Отступ после карточки.
-
-            // Карточка с информацией о напряжении.
+            SizedBox(
+              height: 20,
+            ),
             _buildInfoCard(
-              // Создаем карточку с информацией о напряжении.
               title: 'Напряжение',
-              value: '$_batteryVoltage V', // Напряжение батареи.
-              icon: Icons.electrical_services, // Иконка для напряжения.
-              backgroundColor: Colors.purple[100], // Цвет фона карточки.
+              value: '$_batteryVoltage V',
+              icon: Icons.electrical_services,
+              backgroundColor: Colors.orange[300],
             ),
-            SizedBox(height: 30), // Отступ перед кнопкой обновления информации.
-
-            // Центрируем кнопку обновления информации с индикатором загрузки.
+            SizedBox(
+              height: 30,
+            ),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton.icon(
-                // Кнопка с иконкой.
-                onPressed: () {
-                  _startUpdatingBatteryInfo(); // Запускаем обновление информации о батарее.
-                },
-                icon: _isLoading // Иконка обновления или индикатор загрузки.
-                    ? CircularProgressIndicator(
-                        color: Colors.white, // Цвет индикатора.
-                        strokeWidth: 2.0, // Ширина индикатора.
-                      )
-                    : Icon(Icons.refresh), // Иконка обновления.
-                label: Text(
-                  // Текст на кнопке.
-                  _isLoading ? 'Обновляется...' : 'Обновить информацию',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white), // Стиль текста на кнопке.
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal[300], // Цвет фона кнопки.
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 32, vertical: 16), // Отступы внутри кнопки.
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(20), // Скругленные углы кнопки.
-                  ),
-                ),
-              ),
-            ),
+                  onPressed: () {
+                    _startUpdatingBatteryInfo();
+                  },
+                  icon: _isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.white, strokeWidth: 2.0)
+                      : Icon(Icons.refresh),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal[300],
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                  label: Text(
+                    _isLoading ? 'Обновляется...' : 'Обновить информацию',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  )),
+            )
           ],
         ),
       ),
     );
   }
 
-  // Функция для создания карточек с информацией.
   Widget _buildInfoCard({
-    // Метод для создания карточек с информацией.
-    required String title, // Заголовок карточки.
-    required String value, // Значение карточки.
-    required IconData icon, // Иконка для карточки.
-    required Color? backgroundColor, // Цвет фона карточки.
+    required String title,
+    required String value,
+    required IconData icon,
+    required Color? backgroundColor,
   }) {
     return Container(
-      // Контейнер для карточки.
-      padding: EdgeInsets.all(16), // Внутренние отступы карточки.
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        // Оформление карточки.
-        color: backgroundColor, // Цвет фона.
-        borderRadius: BorderRadius.circular(12), // Скругленные углы.
-        boxShadow: [
-          // Тень для карточки.
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2), // Цвет тени.
-            spreadRadius: 2, // Радиус распространения тени.
-            blurRadius: 10, // Размытие тени.
-            offset: Offset(0, 3), // Смещение тени.
-          ),
-        ],
-      ),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 10,
+                offset: Offset(0, 3))
+          ]),
       child: Row(
-        // Строка для размещения элементов в карточке.
         children: [
-          Icon(icon, size: 40, color: Colors.blueGrey[800]), // Иконка.
-          SizedBox(width: 20), // Отступ между иконкой и текстом.
+          Icon(
+            icon,
+            size: 40,
+            color: Colors.blueGrey[800],
+          ),
+          SizedBox(
+            width: 20,
+          ),
           Column(
-            // Столбец для текста.
-            crossAxisAlignment:
-                CrossAxisAlignment.start, // Выравнивание по левому краю.
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                // Заголовок карточки.
                 title,
                 style: TextStyle(
-                  fontSize: 18, // Размер шрифта.
-                  fontWeight: FontWeight.w600, // Полужирный шрифт.
-                  color: Colors.blueGrey[800], // Цвет заголовка.
-                ),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blueGrey[800]),
               ),
-              SizedBox(height: 5), // Отступ после заголовка.
+              SizedBox(
+                height: 5,
+              ),
               Text(
-                // Значение карточки.
                 value,
                 style: TextStyle(
-                  fontSize: 16, // Размер шрифта.
-                  fontWeight: FontWeight.bold, // Жирный шрифт.
-                  color: Colors.blueGrey[900], // Цвет текста значения.
-                ),
-              ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey[900]),
+              )
             ],
           ),
         ],
