@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'testing/broken_pixels_screen.dart';
 import 'package:path/path.dart';
 import 'testing/vibration_screen.dart';
+import 'testing/touchscreen_test.dart';
 
 class TestMenu extends StatelessWidget {
   static ButtonStyle buttonStyle = TextButton.styleFrom(
@@ -58,20 +59,19 @@ class TestMenu extends StatelessWidget {
                   ),
                 ),
 
-                // Expanded(
-                //   child: TextButton(
-                //     onPressed: (){
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => TODO();
-                //         )
-                //       );
-                //     },
-                //     style: buttonStyle,
-                //     child: const Text("Камера"),
-                //   ),
-                // ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TouchTestScreen(),
+                          ));
+                    },
+                    style: buttonStyle,
+                    child: const Text("Сенсорный экран"),
+                  ),
+                ),
 
                 // Expanded(
                 //   child: TextButton(
